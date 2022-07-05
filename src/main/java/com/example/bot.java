@@ -1,9 +1,13 @@
 package com.example;
 
+import org.glassfish.jersey.message.internal.Token;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvBuilder;
 
 public class bot extends TelegramLongPollingBot {
 
@@ -31,7 +35,8 @@ public class bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "5524767933:AAHs30_C1x-poRqPBgcSbmei2CdPcFwj0dQ";
+        Dotenv env = new DotenvBuilder().load();
+        return env.get("token");
     }
     
 }
