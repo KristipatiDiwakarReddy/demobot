@@ -1,10 +1,12 @@
 package com.example;
 
-import org.glassfish.jersey.message.internal.Token;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import com.example.Plugins.split;
+import com.example.Plugins.start;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvBuilder;
@@ -13,19 +15,25 @@ public class bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        System.out.println(update.getMessage().getText());
-        //SendMessage sm  = new SendMessage(update.getMessage().getChatId().toString(), "Hi, Welcome to Splitter Bot!!\nI can Split your Bills");
-    
-        if(update.getMessage().getText().equals("/start"))
-        {
-            SendMessage sm  = new SendMessage(update.getMessage().getChatId().toString(), "Hi, Welcome to Splitter Bot!!\nI can Split your Bills\nEnter the number of people");
-            try {
-                execute(sm);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+        // if Message ;;
+        if(update.hasMessage()) {
+            String cmd = update.getMessage().getText();
+            new start().handleRequest(update, cmd);
+            new split().handleRequest(update, cmd);
         }
 
+    }
+
+    // Send Message Method 
+    public void sendMessage(Update update, String text) {
+        String chatId = update.getMessage().getChatId().toString();
+        SendMessage msg = new SendMessage(chatId, text);
+
+        try {
+            execute(msg);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
