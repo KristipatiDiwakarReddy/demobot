@@ -34,7 +34,7 @@ public class split extends bot implements Master {
                 for (String name : names) {
                     System.out.println(name); // Print Name
                 }
-                sendMessage(update, "Enter how much each spent \nExample : 100, 200, 300\n\nNote :- Each names should be separated by ','");
+                sendMessage(update, "Enter how much each spent \nExample : 100, 200, 300\n\nNote :- Each Bills should be separated by ','");
             }
         }
     }
